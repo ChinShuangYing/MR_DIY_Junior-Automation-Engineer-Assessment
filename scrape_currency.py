@@ -20,7 +20,7 @@ def scrape_bnm_exchange_rate_revised(csv_filename="currency_rates.csv"):
         
         is_first_header = True
 
-        # 1. Iterate through all rows and separate data into groups
+        # Iterate through all rows and separate data into groups
         for row in rows:
             cells_th = row.find_elements(By.TAG_NAME, "th")
             cells_td = row.find_elements(By.TAG_NAME, "td")
@@ -28,10 +28,8 @@ def scrape_bnm_exchange_rate_revised(csv_filename="currency_rates.csv"):
             # Row data text (prioritizing 'th' for headers, 'td' for values)
             row_data_text = [cell.text for cell in (cells_th if cells_th else cells_td)]
             
-            # --- Header Logic ---
+            # Header Logic
             if cells_th:
-                # This is a header row (e.g., the initial "CURRENCY" row or subsequent "TIME" row).
-                
                 # If we've collected data for the previous group, finalize it before starting a new one.
                 if current_group_data:
                     # Create a DataFrame for the completed group
@@ -56,8 +54,8 @@ def scrape_bnm_exchange_rate_revised(csv_filename="currency_rates.csv"):
                 
                 continue # Move to the next row (don't treat a header row as data)
 
-            # --- Separator/Blank Row Logic ---
-            # A blank row signifies the end of a group's data.
+            # Blank Row Logic
+            # A blank row is the end of a group's data.
             if not row_data_text or len(row_data_text) == 0:
                 # If we have data and we hit a separator, finalize the group.
                 if current_group_data:
@@ -71,13 +69,12 @@ def scrape_bnm_exchange_rate_revised(csv_filename="currency_rates.csv"):
                 continue
 
 
-            # --- Data Row Logic ---
-            # If it's a regular data row (tds)
+            # Data Row Logic
             if row_data_text:
                 current_group_data.append(row_data_text)
 
 
-        # 2. Finalize the last group's data after the loop ends
+        # Finalize the last group's data after the loop ends
         if current_group_data:
             df_group = pd.DataFrame(current_group_data)
             if current_headers and len(df_group.columns) == len(current_headers):
@@ -85,16 +82,14 @@ def scrape_bnm_exchange_rate_revised(csv_filename="currency_rates.csv"):
             all_group_data.append(df_group)
 
 
-        # 3. Merge all collected DataFrames horizontally
+        # Merge all collected DataFrames horizontally
         if all_group_data:
-            # We use `pd.concat` with `axis=1` to combine them side-by-side.
-            # `ignore_index=True` ensures they are aligned by row index (assuming corresponding rows are the same currency).
             final_df = pd.concat(all_group_data, axis=1)
 
             # Clean up duplicate columns if they exist (e.g., the 'DATE' column that might repeat)
             final_df = final_df.loc[:, ~final_df.columns.duplicated()]
 
-            # 4. Create DataFrame and Save
+            # Save
             final_df.to_csv(csv_filename, index=False)
             print(f"Currency rates in BNM saved to {csv_filename}")
         else:
@@ -104,8 +99,8 @@ def scrape_bnm_exchange_rate_revised(csv_filename="currency_rates.csv"):
         print(f"An error occurred during scraping: {e}")
 
     finally:
-        # 5. Clean Up
         driver.quit()
 
 if __name__ == "__main__":
+
     scrape_bnm_exchange_rate_revised()
