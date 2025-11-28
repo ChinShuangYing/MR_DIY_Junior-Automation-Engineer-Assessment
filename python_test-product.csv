@@ -1,0 +1,21 @@
+product_code,product_description,product_category,cost,price,currency
+P001,Product 1,Electronics,40,80,MYR
+P002,Product 2,Clothing,30,60,MYR
+P003,Product 3,Groceries,10,20,MYR
+P004,Product 4,Electronics,50,100,SGD
+P005,Product 5,Clothing,25,50,SGD
+P006,Product 6,Groceries,15,30,SGD
+P007,Product 7,Electronics,60,120,USD
+P008,Product 8,Clothing,20,40,USD
+P009,Product 9,Groceries,12,24,USD
+P010,Product 10,Electronics,70,140,THB
+P011,Product 11,Clothing,35,70,THB
+P012,Product 12,Groceries,18,36,THB
+P013,Product 13,Electronics,45,90,THB
+P014,Product 14,Clothing,28,56,EUR
+P015,Product 15,Groceries,22,44,EUR
+P016,Product 16,Electronics,65,130,EUR
+P017,Product 17,Clothing,32,64,EUR
+P018,Product 18,Groceries,20,40,CNY
+P019,Product 19,Electronics,55,110,BND
+P020,Product 20,Clothing,38,76,CNY
